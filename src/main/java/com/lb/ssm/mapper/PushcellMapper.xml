@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lb.ssm.mapper.PushcellMapper" >
+  <resultMap id="BaseResultMap" type="com.lb.ssm.vo.Pushcell" >
+    <id column="pushId" property="pushid" jdbcType="INTEGER" />
+    <result column="pushDate" property="pushdate" jdbcType="VARCHAR" />
+    <result column="pushCellId" property="pushcellid" jdbcType="INTEGER" />
+    <result column="pushCushId" property="pushcushid" jdbcType="INTEGER" />
+    <result column="pushCushName" property="pushcushname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pushId, pushDate, pushCellId, pushCushId, pushCushName
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lb.ssm.vo.PushcellExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pushcell
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pushcell
+    where pushId = #{pushid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pushcell
+    where pushId = #{pushid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lb.ssm.vo.PushcellExample" >
+    delete from pushcell
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lb.ssm.vo.Pushcell" >
+    insert into pushcell (pushId, pushDate, pushCellId, 
+      pushCushId, pushCushName)
+    values (#{pushid,jdbcType=INTEGER}, #{pushdate,jdbcType=VARCHAR}, #{pushcellid,jdbcType=INTEGER}, 
+      #{pushcushid,jdbcType=INTEGER}, #{pushcushname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lb.ssm.vo.Pushcell" >
+    insert into pushcell
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pushid != null" >
+        pushId,
+      </if>
+      <if test="pushdate != null" >
+        pushDate,
+      </if>
+      <if test="pushcellid != null" >
+        pushCellId,
+      </if>
+      <if test="pushcushid != null" >
+        pushCushId,
+      </if>
+      <if test="pushcushname != null" >
+        pushCushName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pushid != null" >
+        #{pushid,jdbcType=INTEGER},
+      </if>
+      <if test="pushdate != null" >
+        #{pushdate,jdbcType=VARCHAR},
+      </if>
+      <if test="pushcellid != null" >
+        #{pushcellid,jdbcType=INTEGER},
+      </if>
+      <if test="pushcushid != null" >
+        #{pushcushid,jdbcType=INTEGER},
+      </if>
+      <if test="pushcushname != null" >
+        #{pushcushname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lb.ssm.vo.PushcellExample" resultType="java.lang.Integer" >
+    select count(*) from pushcell
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pushcell
+    <set >
+      <if test="record.pushid != null" >
+        pushId = #{record.pushid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pushdate != null" >
+        pushDate = #{record.pushdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pushcellid != null" >
+        pushCellId = #{record.pushcellid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pushcushid != null" >
+        pushCushId = #{record.pushcushid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pushcushname != null" >
+        pushCushName = #{record.pushcushname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pushcell
+    set pushId = #{record.pushid,jdbcType=INTEGER},
+      pushDate = #{record.pushdate,jdbcType=VARCHAR},
+      pushCellId = #{record.pushcellid,jdbcType=INTEGER},
+      pushCushId = #{record.pushcushid,jdbcType=INTEGER},
+      pushCushName = #{record.pushcushname,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lb.ssm.vo.Pushcell" >
+    update pushcell
+    <set >
+      <if test="pushdate != null" >
+        pushDate = #{pushdate,jdbcType=VARCHAR},
+      </if>
+      <if test="pushcellid != null" >
+        pushCellId = #{pushcellid,jdbcType=INTEGER},
+      </if>
+      <if test="pushcushid != null" >
+        pushCushId = #{pushcushid,jdbcType=INTEGER},
+      </if>
+      <if test="pushcushname != null" >
+        pushCushName = #{pushcushname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pushId = #{pushid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lb.ssm.vo.Pushcell" >
+    update pushcell
+    set pushDate = #{pushdate,jdbcType=VARCHAR},
+      pushCellId = #{pushcellid,jdbcType=INTEGER},
+      pushCushId = #{pushcushid,jdbcType=INTEGER},
+      pushCushName = #{pushcushname,jdbcType=VARCHAR}
+    where pushId = #{pushid,jdbcType=INTEGER}
+  </update>
+</mapper>

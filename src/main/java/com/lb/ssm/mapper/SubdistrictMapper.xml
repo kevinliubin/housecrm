@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lb.ssm.mapper.SubdistrictMapper" >
+  <resultMap id="BaseResultMap" type="com.lb.ssm.vo.Subdistrict" >
+    <id column="subdistrictId" property="subdistrictid" jdbcType="INTEGER" />
+    <result column="subdistrictName" property="subdistrictname" jdbcType="VARCHAR" />
+    <result column="subdistrictDiscribe" property="subdistrictdiscribe" jdbcType="VARCHAR" />
+    <result column="subdistrictAddr" property="subdistrictaddr" jdbcType="VARCHAR" />
+    <result column="subdistrictPic" property="subdistrictpic" jdbcType="VARCHAR" />
+    <result column="subdistrictBelong" property="subdistrictbelong" jdbcType="VARCHAR" />
+    <result column="subdistrictPic2" property="subdistrictpic2" jdbcType="VARCHAR" />
+    <result column="subdistrictPic3" property="subdistrictpic3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    subdistrictId, subdistrictName, subdistrictDiscribe, subdistrictAddr, subdistrictPic, 
+    subdistrictBelong, subdistrictPic2, subdistrictPic3
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lb.ssm.vo.SubdistrictExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from subdistrict
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from subdistrict
+    where subdistrictId = #{subdistrictid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from subdistrict
+    where subdistrictId = #{subdistrictid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lb.ssm.vo.SubdistrictExample" >
+    delete from subdistrict
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lb.ssm.vo.Subdistrict" >
+    insert into subdistrict (subdistrictId, subdistrictName, subdistrictDiscribe, 
+      subdistrictAddr, subdistrictPic, subdistrictBelong, 
+      subdistrictPic2, subdistrictPic3)
+    values (#{subdistrictid,jdbcType=INTEGER}, #{subdistrictname,jdbcType=VARCHAR}, #{subdistrictdiscribe,jdbcType=VARCHAR}, 
+      #{subdistrictaddr,jdbcType=VARCHAR}, #{subdistrictpic,jdbcType=VARCHAR}, #{subdistrictbelong,jdbcType=VARCHAR}, 
+      #{subdistrictpic2,jdbcType=VARCHAR}, #{subdistrictpic3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lb.ssm.vo.Subdistrict" >
+    insert into subdistrict
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="subdistrictid != null" >
+        subdistrictId,
+      </if>
+      <if test="subdistrictname != null" >
+        subdistrictName,
+      </if>
+      <if test="subdistrictdiscribe != null" >
+        subdistrictDiscribe,
+      </if>
+      <if test="subdistrictaddr != null" >
+        subdistrictAddr,
+      </if>
+      <if test="subdistrictpic != null" >
+        subdistrictPic,
+      </if>
+      <if test="subdistrictbelong != null" >
+        subdistrictBelong,
+      </if>
+      <if test="subdistrictpic2 != null" >
+        subdistrictPic2,
+      </if>
+      <if test="subdistrictpic3 != null" >
+        subdistrictPic3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="subdistrictid != null" >
+        #{subdistrictid,jdbcType=INTEGER},
+      </if>
+      <if test="subdistrictname != null" >
+        #{subdistrictname,jdbcType=VARCHAR},
+      </if>
+      <if test="subdistrictdiscribe != null" >
+        #{subdistrictdiscribe,jdbcType=VARCHAR},
+      </if>
+      <if test="subdistrictaddr != null" >
+        #{subdistrictaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="subdistrictpic != null" >
+        #{subdistrictpic,jdbcType=VARCHAR},
+      </if>
+      <if test="subdistrictbelong != null" >
+        #{subdistrictbelong,jdbcType=VARCHAR},
+      </if>
+      <if test="subdistrictpic2 != null" >
+        #{subdistrictpic2,jdbcType=VARCHAR},
+      </if>
+      <if test="subdistrictpic3 != null" >
+        #{subdistrictpic3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lb.ssm.vo.SubdistrictExample" resultType="java.lang.Integer" >
+    select count(*) from subdistrict
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update subdistrict
+    <set >
+      <if test="record.subdistrictid != null" >
+        subdistrictId = #{record.subdistrictid,jdbcType=INTEGER},
+      </if>
+      <if test="record.subdistrictname != null" >
+        subdistrictName = #{record.subdistrictname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subdistrictdiscribe != null" >
+        subdistrictDiscribe = #{record.subdistrictdiscribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subdistrictaddr != null" >
+        subdistrictAddr = #{record.subdistrictaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subdistrictpic != null" >
+        subdistrictPic = #{record.subdistrictpic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subdistrictbelong != null" >
+        subdistrictBelong = #{record.subdistrictbelong,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subdistrictpic2 != null" >
+        subdistrictPic2 = #{record.subdistrictpic2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subdistrictpic3 != null" >
+        subdistrictPic3 = #{record.subdistrictpic3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update subdistrict
+    set subdistrictId = #{record.subdistrictid,jdbcType=INTEGER},
+      subdistrictName = #{record.subdistrictname,jdbcType=VARCHAR},
+      subdistrictDiscribe = #{record.subdistrictdiscribe,jdbcType=VARCHAR},
+      subdistrictAddr = #{record.subdistrictaddr,jdbcType=VARCHAR},
+      subdistrictPic = #{record.subdistrictpic,jdbcType=VARCHAR},
+      subdistrictBelong = #{record.subdistrictbelong,jdbcType=VARCHAR},
+      subdistrictPic2 = #{record.subdistrictpic2,jdbcType=VARCHAR},
+      subdistrictPic3 = #{record.subdistrictpic3,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lb.ssm.vo.Subdistrict" >
+    update subdistrict
+    <set >
+      <if test="subdistrictname != null" >
+        subdistrictName = #{subdistrictname,jdbcType=VARCHAR},
+      </if>
+      <if test="subdistrictdiscribe != null" >
+        subdistrictDiscribe = #{subdistrictdiscribe,jdbcType=VARCHAR},
+      </if>
+      <if test="subdistrictaddr != null" >
+        subdistrictAddr = #{subdistrictaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="subdistrictpic != null" >
+        subdistrictPic = #{subdistrictpic,jdbcType=VARCHAR},
+      </if>
+      <if test="subdistrictbelong != null" >
+        subdistrictBelong = #{subdistrictbelong,jdbcType=VARCHAR},
+      </if>
+      <if test="subdistrictpic2 != null" >
+        subdistrictPic2 = #{subdistrictpic2,jdbcType=VARCHAR},
+      </if>
+      <if test="subdistrictpic3 != null" >
+        subdistrictPic3 = #{subdistrictpic3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where subdistrictId = #{subdistrictid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lb.ssm.vo.Subdistrict" >
+    update subdistrict
+    set subdistrictName = #{subdistrictname,jdbcType=VARCHAR},
+      subdistrictDiscribe = #{subdistrictdiscribe,jdbcType=VARCHAR},
+      subdistrictAddr = #{subdistrictaddr,jdbcType=VARCHAR},
+      subdistrictPic = #{subdistrictpic,jdbcType=VARCHAR},
+      subdistrictBelong = #{subdistrictbelong,jdbcType=VARCHAR},
+      subdistrictPic2 = #{subdistrictpic2,jdbcType=VARCHAR},
+      subdistrictPic3 = #{subdistrictpic3,jdbcType=VARCHAR}
+    where subdistrictId = #{subdistrictid,jdbcType=INTEGER}
+  </update>
+</mapper>

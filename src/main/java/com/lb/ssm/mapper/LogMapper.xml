@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lb.ssm.mapper.LogMapper" >
+  <resultMap id="BaseResultMap" type="com.lb.ssm.vo.Log" >
+    <id column="logId" property="logid" jdbcType="INTEGER" />
+    <result column="logUserId" property="loguserid" jdbcType="INTEGER" />
+    <result column="logUsername" property="logusername" jdbcType="VARCHAR" />
+    <result column="loginIp" property="loginip" jdbcType="VARCHAR" />
+    <result column="operation" property="operation" jdbcType="VARCHAR" />
+    <result column="logDate" property="logdate" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    logId, logUserId, logUsername, loginIp, operation, logDate, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lb.ssm.vo.LogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from log
+    where logId = #{logid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from log
+    where logId = #{logid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lb.ssm.vo.LogExample" >
+    delete from log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lb.ssm.vo.Log" >
+    insert into log (logId, logUserId, logUsername, 
+      loginIp, operation, logDate, 
+      remark)
+    values (#{logid,jdbcType=INTEGER}, #{loguserid,jdbcType=INTEGER}, #{logusername,jdbcType=VARCHAR}, 
+      #{loginip,jdbcType=VARCHAR}, #{operation,jdbcType=VARCHAR}, #{logdate,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lb.ssm.vo.Log" >
+    insert into log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logid != null" >
+        logId,
+      </if>
+      <if test="loguserid != null" >
+        logUserId,
+      </if>
+      <if test="logusername != null" >
+        logUsername,
+      </if>
+      <if test="loginip != null" >
+        loginIp,
+      </if>
+      <if test="operation != null" >
+        operation,
+      </if>
+      <if test="logdate != null" >
+        logDate,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logid != null" >
+        #{logid,jdbcType=INTEGER},
+      </if>
+      <if test="loguserid != null" >
+        #{loguserid,jdbcType=INTEGER},
+      </if>
+      <if test="logusername != null" >
+        #{logusername,jdbcType=VARCHAR},
+      </if>
+      <if test="loginip != null" >
+        #{loginip,jdbcType=VARCHAR},
+      </if>
+      <if test="operation != null" >
+        #{operation,jdbcType=VARCHAR},
+      </if>
+      <if test="logdate != null" >
+        #{logdate,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lb.ssm.vo.LogExample" resultType="java.lang.Integer" >
+    select count(*) from log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update log
+    <set >
+      <if test="record.logid != null" >
+        logId = #{record.logid,jdbcType=INTEGER},
+      </if>
+      <if test="record.loguserid != null" >
+        logUserId = #{record.loguserid,jdbcType=INTEGER},
+      </if>
+      <if test="record.logusername != null" >
+        logUsername = #{record.logusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginip != null" >
+        loginIp = #{record.loginip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operation != null" >
+        operation = #{record.operation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logdate != null" >
+        logDate = #{record.logdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update log
+    set logId = #{record.logid,jdbcType=INTEGER},
+      logUserId = #{record.loguserid,jdbcType=INTEGER},
+      logUsername = #{record.logusername,jdbcType=VARCHAR},
+      loginIp = #{record.loginip,jdbcType=VARCHAR},
+      operation = #{record.operation,jdbcType=VARCHAR},
+      logDate = #{record.logdate,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lb.ssm.vo.Log" >
+    update log
+    <set >
+      <if test="loguserid != null" >
+        logUserId = #{loguserid,jdbcType=INTEGER},
+      </if>
+      <if test="logusername != null" >
+        logUsername = #{logusername,jdbcType=VARCHAR},
+      </if>
+      <if test="loginip != null" >
+        loginIp = #{loginip,jdbcType=VARCHAR},
+      </if>
+      <if test="operation != null" >
+        operation = #{operation,jdbcType=VARCHAR},
+      </if>
+      <if test="logdate != null" >
+        logDate = #{logdate,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where logId = #{logid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lb.ssm.vo.Log" >
+    update log
+    set logUserId = #{loguserid,jdbcType=INTEGER},
+      logUsername = #{logusername,jdbcType=VARCHAR},
+      loginIp = #{loginip,jdbcType=VARCHAR},
+      operation = #{operation,jdbcType=VARCHAR},
+      logDate = #{logdate,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where logId = #{logid,jdbcType=INTEGER}
+  </update>
+</mapper>

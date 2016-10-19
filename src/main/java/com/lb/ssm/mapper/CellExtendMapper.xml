@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lb.ssm.mapper.CellExtendMapper" >
+  <resultMap id="BaseResultMap" type="com.lb.ssm.vo.CellExtend" >
+    <id column="cellId" property="cellid" jdbcType="INTEGER" />
+    <result column="cellName" property="cellname" jdbcType="VARCHAR" />
+    <result column="cellFloor" property="cellfloor" jdbcType="INTEGER" />
+    <result column="cellCustomerId" property="cellcustomerid" jdbcType="INTEGER" />
+    <result column="cellCustomerName" property="cellcustomername" jdbcType="VARCHAR" />
+    <result column="cellArea" property="cellarea" jdbcType="DOUBLE" />
+    <result column="cellMoney" property="cellmoney" jdbcType="DOUBLE" />
+    <result column="cellTotal" property="celltotal" jdbcType="DOUBLE" />
+    <result column="cellPoint" property="cellpoint" jdbcType="DOUBLE" />
+    <result column="ceSubdistrictId" property="cesubdistrictid" jdbcType="INTEGER" />
+    <result column="cellState" property="cellstate" jdbcType="INTEGER" />
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List" >
+    cellId, cellName, cellFloor, cellCustomerId, cellCustomerName, cellArea, cellMoney, 
+    cellTotal, cellPoint, ceSubdistrictId, cellState
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lb.ssm.vo.CellExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cell
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  
+ 
+  
+</mapper>

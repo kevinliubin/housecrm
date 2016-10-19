@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lb.ssm.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.lb.ssm.vo.User" >
+    <id column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="userName" property="username" jdbcType="VARCHAR" />
+    <result column="userPassword" property="userpassword" jdbcType="VARCHAR" />
+    <result column="userSex" property="usersex" jdbcType="VARCHAR" />
+    <result column="userPhone" property="userphone" jdbcType="CHAR" />
+    <result column="userState" property="userstate" jdbcType="INTEGER" />
+    <result column="userCard" property="usercard" jdbcType="CHAR" />
+    <result column="userCardname" property="usercardname" jdbcType="VARCHAR" />
+    <result column="userAddr" property="useraddr" jdbcType="VARCHAR" />
+    <result column="userInDate" property="userindate" jdbcType="VARCHAR" />
+    <result column="userOutDate" property="useroutdate" jdbcType="VARCHAR" />
+    <result column="userRoleid" property="userroleid" jdbcType="INTEGER" />
+    <result column="loginIntime" property="loginintime" jdbcType="VARCHAR" />
+    <result column="loginOuttime" property="loginouttime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    userId, userName, userPassword, userSex, userPhone, userState, userCard, userCardname, 
+    userAddr, userInDate, userOutDate, userRoleid, loginIntime, loginOuttime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lb.ssm.vo.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where userId = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where userId = #{userid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lb.ssm.vo.UserExample" >
+    delete from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lb.ssm.vo.User" >
+    insert into user (userId, userName, userPassword, 
+      userSex, userPhone, userState, 
+      userCard, userCardname, userAddr, 
+      userInDate, userOutDate, userRoleid, 
+      loginIntime, loginOuttime)
+    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{userpassword,jdbcType=VARCHAR}, 
+      #{usersex,jdbcType=VARCHAR}, #{userphone,jdbcType=CHAR}, #{userstate,jdbcType=INTEGER}, 
+      #{usercard,jdbcType=CHAR}, #{usercardname,jdbcType=VARCHAR}, #{useraddr,jdbcType=VARCHAR}, 
+      #{userindate,jdbcType=VARCHAR}, #{useroutdate,jdbcType=VARCHAR}, #{userroleid,jdbcType=INTEGER}, 
+      #{loginintime,jdbcType=VARCHAR}, #{loginouttime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lb.ssm.vo.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="username != null" >
+        userName,
+      </if>
+      <if test="userpassword != null" >
+        userPassword,
+      </if>
+      <if test="usersex != null" >
+        userSex,
+      </if>
+      <if test="userphone != null" >
+        userPhone,
+      </if>
+      <if test="userstate != null" >
+        userState,
+      </if>
+      <if test="usercard != null" >
+        userCard,
+      </if>
+      <if test="usercardname != null" >
+        userCardname,
+      </if>
+      <if test="useraddr != null" >
+        userAddr,
+      </if>
+      <if test="userindate != null" >
+        userInDate,
+      </if>
+      <if test="useroutdate != null" >
+        userOutDate,
+      </if>
+      <if test="userroleid != null" >
+        userRoleid,
+      </if>
+      <if test="loginintime != null" >
+        loginIntime,
+      </if>
+      <if test="loginouttime != null" >
+        loginOuttime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userpassword != null" >
+        #{userpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="usersex != null" >
+        #{usersex,jdbcType=VARCHAR},
+      </if>
+      <if test="userphone != null" >
+        #{userphone,jdbcType=CHAR},
+      </if>
+      <if test="userstate != null" >
+        #{userstate,jdbcType=INTEGER},
+      </if>
+      <if test="usercard != null" >
+        #{usercard,jdbcType=CHAR},
+      </if>
+      <if test="usercardname != null" >
+        #{usercardname,jdbcType=VARCHAR},
+      </if>
+      <if test="useraddr != null" >
+        #{useraddr,jdbcType=VARCHAR},
+      </if>
+      <if test="userindate != null" >
+        #{userindate,jdbcType=VARCHAR},
+      </if>
+      <if test="useroutdate != null" >
+        #{useroutdate,jdbcType=VARCHAR},
+      </if>
+      <if test="userroleid != null" >
+        #{userroleid,jdbcType=INTEGER},
+      </if>
+      <if test="loginintime != null" >
+        #{loginintime,jdbcType=VARCHAR},
+      </if>
+      <if test="loginouttime != null" >
+        #{loginouttime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lb.ssm.vo.UserExample" resultType="java.lang.Integer" >
+    select count(*) from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user
+    <set >
+      <if test="record.userid != null" >
+        userId = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.username != null" >
+        userName = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userpassword != null" >
+        userPassword = #{record.userpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usersex != null" >
+        userSex = #{record.usersex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userphone != null" >
+        userPhone = #{record.userphone,jdbcType=CHAR},
+      </if>
+      <if test="record.userstate != null" >
+        userState = #{record.userstate,jdbcType=INTEGER},
+      </if>
+      <if test="record.usercard != null" >
+        userCard = #{record.usercard,jdbcType=CHAR},
+      </if>
+      <if test="record.usercardname != null" >
+        userCardname = #{record.usercardname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.useraddr != null" >
+        userAddr = #{record.useraddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userindate != null" >
+        userInDate = #{record.userindate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.useroutdate != null" >
+        userOutDate = #{record.useroutdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userroleid != null" >
+        userRoleid = #{record.userroleid,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginintime != null" >
+        loginIntime = #{record.loginintime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginouttime != null" >
+        loginOuttime = #{record.loginouttime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user
+    set userId = #{record.userid,jdbcType=INTEGER},
+      userName = #{record.username,jdbcType=VARCHAR},
+      userPassword = #{record.userpassword,jdbcType=VARCHAR},
+      userSex = #{record.usersex,jdbcType=VARCHAR},
+      userPhone = #{record.userphone,jdbcType=CHAR},
+      userState = #{record.userstate,jdbcType=INTEGER},
+      userCard = #{record.usercard,jdbcType=CHAR},
+      userCardname = #{record.usercardname,jdbcType=VARCHAR},
+      userAddr = #{record.useraddr,jdbcType=VARCHAR},
+      userInDate = #{record.userindate,jdbcType=VARCHAR},
+      userOutDate = #{record.useroutdate,jdbcType=VARCHAR},
+      userRoleid = #{record.userroleid,jdbcType=INTEGER},
+      loginIntime = #{record.loginintime,jdbcType=VARCHAR},
+      loginOuttime = #{record.loginouttime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lb.ssm.vo.User" >
+    update user
+    <set >
+      <if test="username != null" >
+        userName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userpassword != null" >
+        userPassword = #{userpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="usersex != null" >
+        userSex = #{usersex,jdbcType=VARCHAR},
+      </if>
+      <if test="userphone != null" >
+        userPhone = #{userphone,jdbcType=CHAR},
+      </if>
+      <if test="userstate != null" >
+        userState = #{userstate,jdbcType=INTEGER},
+      </if>
+      <if test="usercard != null" >
+        userCard = #{usercard,jdbcType=CHAR},
+      </if>
+      <if test="usercardname != null" >
+        userCardname = #{usercardname,jdbcType=VARCHAR},
+      </if>
+      <if test="useraddr != null" >
+        userAddr = #{useraddr,jdbcType=VARCHAR},
+      </if>
+      <if test="userindate != null" >
+        userInDate = #{userindate,jdbcType=VARCHAR},
+      </if>
+      <if test="useroutdate != null" >
+        userOutDate = #{useroutdate,jdbcType=VARCHAR},
+      </if>
+      <if test="userroleid != null" >
+        userRoleid = #{userroleid,jdbcType=INTEGER},
+      </if>
+      <if test="loginintime != null" >
+        loginIntime = #{loginintime,jdbcType=VARCHAR},
+      </if>
+      <if test="loginouttime != null" >
+        loginOuttime = #{loginouttime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where userId = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lb.ssm.vo.User" >
+    update user
+    set userName = #{username,jdbcType=VARCHAR},
+      userPassword = #{userpassword,jdbcType=VARCHAR},
+      userSex = #{usersex,jdbcType=VARCHAR},
+      userPhone = #{userphone,jdbcType=CHAR},
+      userState = #{userstate,jdbcType=INTEGER},
+      userCard = #{usercard,jdbcType=CHAR},
+      userCardname = #{usercardname,jdbcType=VARCHAR},
+      userAddr = #{useraddr,jdbcType=VARCHAR},
+      userInDate = #{userindate,jdbcType=VARCHAR},
+      userOutDate = #{useroutdate,jdbcType=VARCHAR},
+      userRoleid = #{userroleid,jdbcType=INTEGER},
+      loginIntime = #{loginintime,jdbcType=VARCHAR},
+      loginOuttime = #{loginouttime,jdbcType=VARCHAR}
+    where userId = #{userid,jdbcType=INTEGER}
+  </update>
+</mapper>
