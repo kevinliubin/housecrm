@@ -35,9 +35,9 @@ com\lb\ssm\vo\PushcellExample.class
 com\lb\ssm\vo\CustomerExample$Criterion.class
 com\lb\ssm\common\FtpUtil.class
 com\lb\ssm\vo\Cell.class
+com\lb\ssm\vo\UserExample.class
 com\lb\ssm\common\MD5Util.class
 com\lb\ssm\vo\User.class
-com\lb\ssm\vo\UserExample.class
 com\lb\ssm\annotation\Token.class
 com\lb\ssm\interceptor\TokenInterceptor.class
 com\lb\ssm\vo\RoleExample$GeneratedCriteria.class
