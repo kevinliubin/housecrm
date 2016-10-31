@@ -54,6 +54,10 @@
 		
 		
 		<div class="row">
+			<div class="col-xs-1" align="left">
+				<button class="btn btn-info" onclick="turnToAddCell()">新增小区住房</button>
+			</div>
+			
 			<div class="dropdown col-xs-1">
 			    <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">小区选择
 			        <span class="caret"></span>
@@ -66,14 +70,12 @@
 			    	</c:forEach>
 			    </ul>
 			</div>
-			<div class="col-xs-1" align="left">
-				<button class="btn btn-info" onclick="turnToAddSubdist()">新增小区</button>
-			</div>
+			<button class="btn btn-success" onclick="searchCell()">查询</button>
+			
 			<div class="col-xs-2">
 					<input type="text" id="name" name="name" class="form-control" placeholder="名称"/>
 			</div>
-			<button class="btn btn-success" onclick="searchSubdist()">查询</button>
-			<button class="btn btn-success" onclick="exportSubdist()">导出小区信息</button>
+			<button class="btn btn-success" onclick="exportCell()">导出小区信息</button>
 			<br>
 			<div class="col-lg-12">
 				<div class="panel panel-default">
@@ -90,9 +92,9 @@
 			<!-- /.col-lg-12 -->
 		</div>
 		
-		<div class="modal fade" id="AddSubdist" tabindex="-1" role="dialog" 
+		<div class="modal fade" id="AddCell" tabindex="-1" role="dialog" 
 			   aria-labelledby="myModalLabel" aria-hidden="true">
-			   <div class="modal-dialog" style="width:300px;margin-top:200px;">
+			   <div class="modal-dialog" style="width:600px;margin-top:200px;">
 			      <div class="modal-content">
 			         <div class="modal-header">
 			            <button type="button" class="close" 
@@ -100,24 +102,30 @@
 			                  &times;
 			            </button>
 			            <h4 class="modal-title" id="myModalLabel">
-			             		添加小区信息
+			             		添加小区房屋信息
 			            </h4>
 			         </div>
-			         	<form action="<%=path%>/sub/addSubdist" method="post" id="AddSubdistForm" enctype="multipart/form-data">
+			         	<form action="<%=path%>/cell/addCell" method="post" id="AddCellForm">
 				         	<div class="modal-body">
 				         		<input type="hidden" name="token" value="${token}" />
-								小区名称：<input type="text" class="form-control"  name="subdistrictname" placeholder="名称" value=""/>
-								小区描述：<input type="text" class="form-control"  name="subdistrictdiscribe" placeholder="描述" value=""/>
-								小区地址：<input type="text" class="form-control"  name="subdistrictaddr" placeholder="地址" value=""/>
-								图片1：<input type="file" class="form-control"  name="myfiles" />
-								图片2：<input type="file" class="form-control"  name="myfiles" />
-								图片3：<input type="file" class="form-control"  name="myfiles" />
+								小区名称：
+								<select name="subname" id="subname" class="form-control">
+									 <option value="" disabled selected>请选择小区</option>  
+									<c:forEach items="${allSubdistList }" var="subdist">
+										<option value="${subdist.subdistrictid }">${subdist.subdistrictname }</option>
+									</c:forEach>
+								</select>
+								楼层：<input type="text" class="form-control"  name="cellfloor" placeholder="楼层(输入数字)" value=""/>
+								单元号：<input type="text" class="form-control"  name="cellname" placeholder="单元号(3-101)" value=""/>
+								房屋面积：<input type="text" class="form-control"  name="cellname" placeholder="面积/m2" value=""/>
+								价格/m2：<input type="text" class="form-control"  name="cellmoney" placeholder="单位价格" value=""/>
+								折扣点：<input type="text" class="form-control"  name="cellmoney" placeholder="折扣点(几个点)" value=""/>
 					         </div>
 				         <div class="modal-footer">
 				            <button type="button" class="btn btn-default" 
 				               data-dismiss="modal">关闭
 				            </button>
-				            <button type="button" class="btn btn-primary" onclick="submitAddSubdist()">
+				            <button type="button" class="btn btn-primary" onclick="submitAddCell()">
 				             		添加
 				            </button>
 			         	</div>
@@ -139,13 +147,13 @@
 			             		修改小区信息
 			            </h4>
 			         </div>
-			         	<form action="<%=path%>/sub/updateSubdist" method="post" id="updateSubdist">
+			         	<form action="<%=path%>/sub/updateCell" method="post" id="updateCell">
 				         	<div class="modal-body">
-				         		<input type="hidden" id="subdistrictid" name="subdistrictid" value="" />
-								名称：<input type="text" class="form-control" id="subdistrictname" name="subdistrictname" value=""/>
-								描述：<input type="text" class="form-control" id="subdistrictdiscribe" name="subdistrictdiscribe" value=""/>
-								地址：<input type="text" class="form-control" id="subdistrictaddr" name="subdistrictaddr" value=""/>
-								所属范围：<input type="text" class="form-control" id="subdistrictbelong" name="subdistrictbelong" value=""/>
+				         		<input type="hidden" id="Cellrictid" name="Cellrictid" value="" />
+								名称：<input type="text" class="form-control" id="Cellrictname" name="Cellrictname" value=""/>
+								描述：<input type="text" class="form-control" id="Cellrictdiscribe" name="Cellrictdiscribe" value=""/>
+								地址：<input type="text" class="form-control" id="Cellrictaddr" name="Cellrictaddr" value=""/>
+								所属范围：<input type="text" class="form-control" id="Cellrictbelong" name="Cellrictbelong" value=""/>
 					         </div>
 				         <div class="modal-footer">
 				            <button type="button" class="btn btn-default" 
@@ -221,9 +229,9 @@
 		                  {title: '总价',field: 'celltotal',align: 'center',valign: 'middle',width:'100px'},
 		                  {field:'operate', title:'查看详情',align:'center',valign: 'middle',width:'80px',
 			               	   formatter:function(value, row, index){
-				               		var a = '<font size=6><i style="cursor:hand;" class="glyphicon glyphicon-search" onclick="searchMore(\''+row.subdistrictid+'\')"></i></font>';
+				               		var a = '<font size=6><i style="cursor:hand;" class="glyphicon glyphicon-search" onclick="searchMore(\''+row.Cellrictid+'\')"></i></font>';
 				               		var c = '<span>  </span>';
-				               		var b = '<font size=6><i style="cursor:hand;" class="glyphicon glyphicon-cog" onclick="modifyMore(\''+row.subdistrictid+'\')"></i></font>';
+				               		var b = '<font size=6><i style="cursor:hand;" class="glyphicon glyphicon-cog" onclick="modifyMore(\''+row.Cellrictid+'\')"></i></font>';
 				               	    return a+c+b;
 			               	   }
 			              }
@@ -232,8 +240,8 @@
 	          });
 		}
 	    
-	    function turnToAddSubdist(){
-	    	$('#AddSubdist').modal({
+	    function turnToAddCell(){
+	    	$('#AddCell').modal({
 			      keyboard: true
 		   });
 	    }
@@ -247,12 +255,13 @@
 	    /** 保存修改 **/
 	    function confirmModify(){
 	    	
-	    	$("#updateSubdist").submit();
+	    	$("#updateCell").submit();
 	    }
 	    
 	    /**保存**/
-	    function submitAddSubdist(){
-	    	$("#AddSubdistForm").submit();
+	    function submitAddCell(){
+	    	//做验证
+	    	$("#AddCellForm").submit();
 	    }
 	    
 	    
@@ -265,11 +274,11 @@
 	    		async:false,
 	    		success:function(msg){
 	    			var data = jQuery.parseJSON(msg);
-	    			$("#subdistrictid").val(subId);
-	    			$("#subdistrictname").val(data.subdistrictname);
-	    			$("#subdistrictdiscribe").val(data.subdistrictdiscribe);
-	    			$("#subdistrictaddr").val(data.subdistrictaddr);
-	    			$("#subdistrictbelong").val(data.subdistrictbelong);
+	    			$("#Cellrictid").val(subId);
+	    			$("#Cellrictname").val(data.Cellrictname);
+	    			$("#Cellrictdiscribe").val(data.Cellrictdiscribe);
+	    			$("#Cellrictaddr").val(data.Cellrictaddr);
+	    			$("#Cellrictbelong").val(data.Cellrictbelong);
 			    	$('#recyleModal').modal({
 					      keyboard: true
 				   });
@@ -277,19 +286,19 @@
 	    	});
 	    }
 	    /**查询 **/
-	    function searchSubdist(){
+	    function searchCell(){
 	    	var na = $("#name").val();
 	    	if(na == null || na ==""){
 	    		var  url = '<%=path%>/sub/subpage';
 	    	}else{
 	    		var name =encodeURI(encodeURI(na));
-		    	url = '<%=path%>/sub/subdistRefush/'+name;
+		    	url = '<%=path%>/sub/CellRefush/'+name;
 	    	}
 	    	$('#dataTables-example').bootstrapTable('refresh',{url:url});
 	    }
 	    /** 导出小区信息 **/
-	    function exportSubdist(){
-	    	window.location.href='<%=path%>/sub/exprtSubdist';
+	    function exportCell(){
+	    	window.location.href='<%=path%>/sub/exprtCell';
 	    }
     </script>
 

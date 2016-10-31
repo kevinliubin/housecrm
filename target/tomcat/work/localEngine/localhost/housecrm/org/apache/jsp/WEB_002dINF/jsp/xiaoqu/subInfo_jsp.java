@@ -247,7 +247,9 @@ public final class subInfo_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("/sub/subList.html\">小区管理</a>\r\n");
       out.write("                                </li>\r\n");
       out.write("                                <li>\r\n");
-      out.write("                                    <a href=\"morris.html\">Morris.js Charts</a>\r\n");
+      out.write("                                    <a href=\"");
+      out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.proprietaryEvaluate("${ctx }", java.lang.String.class, (PageContext)_jspx_page_context, null, false));
+      out.write("/cell/cellList.html\">小区房屋管理</a>\r\n");
       out.write("                                </li>\r\n");
       out.write("                            </ul>\r\n");
       out.write("                            <!-- /.nav-second-level -->\r\n");
