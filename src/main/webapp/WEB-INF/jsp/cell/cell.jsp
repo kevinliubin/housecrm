@@ -189,6 +189,8 @@
 	<script type="text/javascript" src="<%=path%>/js/bootstrap-table.js"></script>
 	<script type="text/javascript" src="<%=path%>/js/bootstrap-table-zh-CN.js"></script>
 	<script src="<%=path%>/vendor/datatables-responsive/dataTables.responsive.js"></script>
+	<!-- 导入layer弹出层框架 -->
+	<script src="<%=path%>/js/layer/layer.js"></script>
 
 	<!-- Custom Theme JavaScript -->
 	<script src="<%=path%>/dist/js/sb-admin-2.js"></script>
@@ -261,6 +263,7 @@
 	    /**保存**/
 	    function submitAddCell(){
 	    	//做验证
+	    	
 	    	$("#AddCellForm").submit();
 	    }
 	    
