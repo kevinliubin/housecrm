@@ -519,6 +519,10 @@ public final class cell_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t<script src=\"");
       out.print(path);
       out.write("/vendor/datatables-responsive/dataTables.responsive.js\"></script>\r\n");
+      out.write("\t<!-- 导入layer弹出层框架 -->\r\n");
+      out.write("\t<script src=\"");
+      out.print(path);
+      out.write("/js/layer/layer.js\"></script>\r\n");
       out.write("\r\n");
       out.write("\t<!-- Custom Theme JavaScript -->\r\n");
       out.write("\t<script src=\"");
@@ -597,6 +601,7 @@ public final class cell_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t    /**保存**/\r\n");
       out.write("\t    function submitAddCell(){\r\n");
       out.write("\t    \t//做验证\r\n");
+      out.write("\t    \t\r\n");
       out.write("\t    \t$(\"#AddCellForm\").submit();\r\n");
       out.write("\t    }\r\n");
       out.write("\t    \r\n");
