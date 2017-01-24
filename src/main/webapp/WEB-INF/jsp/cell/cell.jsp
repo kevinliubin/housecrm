@@ -76,6 +76,7 @@
 					<input type="text" id="name" name="name" class="form-control" placeholder="名称"/>
 			</div>
 			<button class="btn btn-success" onclick="exportCell()">导出小区信息</button>
+			<button class="btn btn-success" onclick="export()">测试</button>
 			<br>
 			<div class="col-lg-12">
 				<div class="panel panel-default">
@@ -115,11 +116,11 @@
 										<option value="${subdist.subdistrictid }">${subdist.subdistrictname }</option>
 									</c:forEach>
 								</select>
-								楼层：<input type="text" class="form-control"  name="cellfloor" placeholder="楼层(输入数字)" value=""/>
-								单元号：<input type="text" class="form-control"  name="cellname" placeholder="单元号(3-101)" value=""/>
-								房屋面积：<input type="text" class="form-control"  name="cellname" placeholder="面积/m2" value=""/>
-								价格/m2：<input type="text" class="form-control"  name="cellmoney" placeholder="单位价格" value=""/>
-								折扣点：<input type="text" class="form-control"  name="cellmoney" placeholder="折扣点(几个点)" value=""/>
+								楼层：<input type="text" class="form-control" id="cellfloor"  name="cellfloor" placeholder="楼层(输入数字)" value="" onblur="checkcellfloorNum()"/>
+								单元号：<input type="text" class="form-control"  id="cellname" name="cellname" placeholder="单元号(3-101)" value=""/>
+								房屋面积：<input type="text" class="form-control" id="cellarea"  name="cellarea" placeholder="面积/m2" value=""/>
+								价格/m2：<input type="text" class="form-control" id="cellmoney" name="cellmoney" placeholder="单位价格" value=""/>
+								折扣点：<input type="text" class="form-control" id="cellpoint" name="cellpoint" placeholder="折扣点(几个点)" value=""/>
 					         </div>
 				         <div class="modal-footer">
 				            <button type="button" class="btn btn-default" 
@@ -231,9 +232,9 @@
 		                  {title: '总价',field: 'celltotal',align: 'center',valign: 'middle',width:'100px'},
 		                  {field:'operate', title:'查看详情',align:'center',valign: 'middle',width:'80px',
 			               	   formatter:function(value, row, index){
-				               		var a = '<font size=6><i style="cursor:hand;" class="glyphicon glyphicon-search" onclick="searchMore(\''+row.Cellrictid+'\')"></i></font>';
+				               		var a = '<font size=6><i style="cursor:hand;" class="glyphicon glyphicon-search" onclick="searchMore(\''+row.cellid+'\')"></i></font>';
 				               		var c = '<span>  </span>';
-				               		var b = '<font size=6><i style="cursor:hand;" class="glyphicon glyphicon-cog" onclick="modifyMore(\''+row.Cellrictid+'\')"></i></font>';
+				               		var b = '<font size=6><i style="cursor:hand;" class="glyphicon glyphicon-cog" onclick="modifyMore(\''+row.cellid+'\')"></i></font>';
 				               	    return a+c+b;
 			               	   }
 			              }
@@ -267,6 +268,8 @@
 	    	$("#AddCellForm").submit();
 	    }
 	    
+	    
+	   
 	    
 	    /**设置**/
 	    function modifyMore(subId){
@@ -302,6 +305,13 @@
 	    /** 导出小区信息 **/
 	    function exportCell(){
 	    	window.location.href='<%=path%>/sub/exprtCell';
+	    }
+	    /** 检查楼层输入是否合法 **/
+	    function checkcellfloorNum(){
+	    	var cellfloor = $("#cellfloor").val();
+	    	if(isNaN(cellfloor)){
+	    		layer.msg("请填写数字");
+	    	}
 	    }
     </script>
 

@@ -110,6 +110,9 @@ public class SubdistrictController {
 	@Token(remove=true)
 	public String addSubdist(Subdistrict subdistrict,@RequestParam MultipartFile[] myfiles,HttpServletRequest request) throws Exception{
 		try {
+			for (MultipartFile file : myfiles) {
+				System.out.println(file.getSize());
+			}
 			subservice.addSubWithFileUpload(subdistrict, myfiles);
 			return "redirect:/sub/subList";
 		} catch (Exception e) {

@@ -383,6 +383,7 @@ public final class cell_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t\t\t\t\t<input type=\"text\" id=\"name\" name=\"name\" class=\"form-control\" placeholder=\"名称\"/>\r\n");
       out.write("\t\t\t</div>\r\n");
       out.write("\t\t\t<button class=\"btn btn-success\" onclick=\"exportCell()\">导出小区信息</button>\r\n");
+      out.write("\t\t\t<button class=\"btn btn-success\" onclick=\"export()\">测试</button>\r\n");
       out.write("\t\t\t<br>\r\n");
       out.write("\t\t\t<div class=\"col-lg-12\">\r\n");
       out.write("\t\t\t\t<div class=\"panel panel-default\">\r\n");
@@ -427,11 +428,11 @@ public final class cell_jsp extends org.apache.jasper.runtime.HttpJspBase
         return;
       out.write("\r\n");
       out.write("\t\t\t\t\t\t\t\t</select>\r\n");
-      out.write("\t\t\t\t\t\t\t\t楼层：<input type=\"text\" class=\"form-control\"  name=\"cellfloor\" placeholder=\"楼层(输入数字)\" value=\"\"/>\r\n");
-      out.write("\t\t\t\t\t\t\t\t单元号：<input type=\"text\" class=\"form-control\"  name=\"cellname\" placeholder=\"单元号(3-101)\" value=\"\"/>\r\n");
-      out.write("\t\t\t\t\t\t\t\t房屋面积：<input type=\"text\" class=\"form-control\"  name=\"cellname\" placeholder=\"面积/m2\" value=\"\"/>\r\n");
-      out.write("\t\t\t\t\t\t\t\t价格/m2：<input type=\"text\" class=\"form-control\"  name=\"cellmoney\" placeholder=\"单位价格\" value=\"\"/>\r\n");
-      out.write("\t\t\t\t\t\t\t\t折扣点：<input type=\"text\" class=\"form-control\"  name=\"cellmoney\" placeholder=\"折扣点(几个点)\" value=\"\"/>\r\n");
+      out.write("\t\t\t\t\t\t\t\t楼层：<input type=\"text\" class=\"form-control\" id=\"cellfloor\"  name=\"cellfloor\" placeholder=\"楼层(输入数字)\" value=\"\" onblur=\"checkcellfloorNum()\"/>\r\n");
+      out.write("\t\t\t\t\t\t\t\t单元号：<input type=\"text\" class=\"form-control\"  id=\"cellname\" name=\"cellname\" placeholder=\"单元号(3-101)\" value=\"\"/>\r\n");
+      out.write("\t\t\t\t\t\t\t\t房屋面积：<input type=\"text\" class=\"form-control\" id=\"cellarea\"  name=\"cellarea\" placeholder=\"面积/m2\" value=\"\"/>\r\n");
+      out.write("\t\t\t\t\t\t\t\t价格/m2：<input type=\"text\" class=\"form-control\" id=\"cellmoney\" name=\"cellmoney\" placeholder=\"单位价格\" value=\"\"/>\r\n");
+      out.write("\t\t\t\t\t\t\t\t折扣点：<input type=\"text\" class=\"form-control\" id=\"cellpoint\" name=\"cellpoint\" placeholder=\"折扣点(几个点)\" value=\"\"/>\r\n");
       out.write("\t\t\t\t\t         </div>\r\n");
       out.write("\t\t\t\t         <div class=\"modal-footer\">\r\n");
       out.write("\t\t\t\t            <button type=\"button\" class=\"btn btn-default\" \r\n");
@@ -519,6 +520,10 @@ public final class cell_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t<script src=\"");
       out.print(path);
       out.write("/vendor/datatables-responsive/dataTables.responsive.js\"></script>\r\n");
+      out.write("\t<!-- 导入layer弹出层框架 -->\r\n");
+      out.write("\t<script src=\"");
+      out.print(path);
+      out.write("/js/layer/layer.js\"></script>\r\n");
       out.write("\r\n");
       out.write("\t<!-- Custom Theme JavaScript -->\r\n");
       out.write("\t<script src=\"");
@@ -563,9 +568,9 @@ public final class cell_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t\t                  {title: '总价',field: 'celltotal',align: 'center',valign: 'middle',width:'100px'},\r\n");
       out.write("\t\t                  {field:'operate', title:'查看详情',align:'center',valign: 'middle',width:'80px',\r\n");
       out.write("\t\t\t               \t   formatter:function(value, row, index){\r\n");
-      out.write("\t\t\t\t               \t\tvar a = '<font size=6><i style=\"cursor:hand;\" class=\"glyphicon glyphicon-search\" onclick=\"searchMore(\\''+row.Cellrictid+'\\')\"></i></font>';\r\n");
+      out.write("\t\t\t\t               \t\tvar a = '<font size=6><i style=\"cursor:hand;\" class=\"glyphicon glyphicon-search\" onclick=\"searchMore(\\''+row.cellid+'\\')\"></i></font>';\r\n");
       out.write("\t\t\t\t               \t\tvar c = '<span>  </span>';\r\n");
-      out.write("\t\t\t\t               \t\tvar b = '<font size=6><i style=\"cursor:hand;\" class=\"glyphicon glyphicon-cog\" onclick=\"modifyMore(\\''+row.Cellrictid+'\\')\"></i></font>';\r\n");
+      out.write("\t\t\t\t               \t\tvar b = '<font size=6><i style=\"cursor:hand;\" class=\"glyphicon glyphicon-cog\" onclick=\"modifyMore(\\''+row.cellid+'\\')\"></i></font>';\r\n");
       out.write("\t\t\t\t               \t    return a+c+b;\r\n");
       out.write("\t\t\t               \t   }\r\n");
       out.write("\t\t\t              }\r\n");
@@ -597,9 +602,15 @@ public final class cell_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t    /**保存**/\r\n");
       out.write("\t    function submitAddCell(){\r\n");
       out.write("\t    \t//做验证\r\n");
+      out.write("\t    \t\r\n");
       out.write("\t    \t$(\"#AddCellForm\").submit();\r\n");
       out.write("\t    }\r\n");
       out.write("\t    \r\n");
+      out.write("\t    \r\n");
+      out.write("\t    function export(){\r\n");
+      out.write("\t    \tvar selects = $(\"#dataTables-example\").bootstrapTable('getSelections'); \r\n");
+      out.write("\t    \talert(selects);\r\n");
+      out.write("\t    }\r\n");
       out.write("\t    \r\n");
       out.write("\t    /**设置**/\r\n");
       out.write("\t    function modifyMore(subId){\r\n");
@@ -643,6 +654,13 @@ public final class cell_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t    \twindow.location.href='");
       out.print(path);
       out.write("/sub/exprtCell';\r\n");
+      out.write("\t    }\r\n");
+      out.write("\t    /** 检查楼层输入是否合法 **/\r\n");
+      out.write("\t    function checkcellfloorNum(){\r\n");
+      out.write("\t    \tvar cellfloor = $(\"#cellfloor\").val();\r\n");
+      out.write("\t    \tif(isNaN(cellfloor)){\r\n");
+      out.write("\t    \t\tlayer.msg(\"请填写数字\");\r\n");
+      out.write("\t    \t}\r\n");
       out.write("\t    }\r\n");
       out.write("    </script>\r\n");
       out.write("\r\n");
@@ -734,9 +752,9 @@ public final class cell_jsp extends org.apache.jasper.runtime.HttpJspBase
     org.apache.taglibs.standard.tag.rt.core.ForEachTag _jspx_th_c_005fforEach_005f1 = (org.apache.taglibs.standard.tag.rt.core.ForEachTag) _005fjspx_005ftagPool_005fc_005fforEach_0026_005fvar_005fitems.get(org.apache.taglibs.standard.tag.rt.core.ForEachTag.class);
     _jspx_th_c_005fforEach_005f1.setPageContext(_jspx_page_context);
     _jspx_th_c_005fforEach_005f1.setParent(null);
-    // /WEB-INF/jsp/cell/cell.jsp(114,9) name = items type = javax.el.ValueExpression reqTime = true required = false fragment = false deferredValue = true expectedTypeName = java.lang.Object deferredMethod = false methodSignature = null
-    _jspx_th_c_005fforEach_005f1.setItems(new org.apache.jasper.el.JspValueExpression("/WEB-INF/jsp/cell/cell.jsp(114,9) '${allSubdistList }'",_el_expressionfactory.createValueExpression(_jspx_page_context.getELContext(),"${allSubdistList }",java.lang.Object.class)).getValue(_jspx_page_context.getELContext()));
-    // /WEB-INF/jsp/cell/cell.jsp(114,9) name = var type = java.lang.String reqTime = false required = false fragment = false deferredValue = false expectedTypeName = null deferredMethod = false methodSignature = null
+    // /WEB-INF/jsp/cell/cell.jsp(115,9) name = items type = javax.el.ValueExpression reqTime = true required = false fragment = false deferredValue = true expectedTypeName = java.lang.Object deferredMethod = false methodSignature = null
+    _jspx_th_c_005fforEach_005f1.setItems(new org.apache.jasper.el.JspValueExpression("/WEB-INF/jsp/cell/cell.jsp(115,9) '${allSubdistList }'",_el_expressionfactory.createValueExpression(_jspx_page_context.getELContext(),"${allSubdistList }",java.lang.Object.class)).getValue(_jspx_page_context.getELContext()));
+    // /WEB-INF/jsp/cell/cell.jsp(115,9) name = var type = java.lang.String reqTime = false required = false fragment = false deferredValue = false expectedTypeName = null deferredMethod = false methodSignature = null
     _jspx_th_c_005fforEach_005f1.setVar("subdist");
     int[] _jspx_push_body_count_c_005fforEach_005f1 = new int[] { 0 };
     try {

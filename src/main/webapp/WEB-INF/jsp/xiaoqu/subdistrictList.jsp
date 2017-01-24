@@ -60,6 +60,7 @@
 			</div>
 			<button class="btn btn-success" onclick="searchSubdist()">查询</button>
 			<button class="btn btn-success" onclick="exportSubdist()">导出小区信息</button>
+			<button class="btn btn-success" onclick="export1()">测试</button>
 			<br>
 			<div class="col-lg-12">
 				<div class="panel panel-default">
@@ -233,6 +234,20 @@
 	    	
 	    }
 	    
+	    onDblClickRow=function(row,obj){
+	    	alert("aaaa");
+	    	var i=0;
+	    	var allTableData = $("#dataTables-example").bootstrapTable('getData');
+	    	for(;i<allTableData.length;i++){
+	    	    if(allTableData[i].ID==row.ID){
+	    	    	alert(i);
+	    	        break;
+	    	    }
+	    	}
+	    	$('#dataTables-example').bootstrapTable("uncheckAll");
+	    	$('#dataTables-example').bootstrapTable("check",i);
+	    	}
+	    
 	    /** 保存修改 **/
 	    function confirmModify(){
 	    	
@@ -244,6 +259,10 @@
 	    	$("#AddSubdistForm").submit();
 	    }
 	    
+	    
+	    function export1(){
+	    	alert("bbbbbbbb");
+	    }
 	    
 	    /**设置**/
 	    function modifyMore(subId){
