@@ -8,7 +8,11 @@ import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.realm.Realm;
-
+/**
+ * 自定义reaml
+ * @author hello
+ *
+ */
 public class MyRealm implements Realm {
 
 	@Override
